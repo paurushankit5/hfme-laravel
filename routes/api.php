@@ -13,9 +13,19 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+Route::middleware(['auth:api', 'auth.superuser'])->group(function () {
+
+    Route::get('/test', 'HomeController@test');
+    Route::get('/test1', 'HomeController@test1');
+
+    
 });
 
 
+
+
+Route::middleware(['auth:api','auth.superuser'])->get('/user', 'HomeController@test');
+
+
 Route::post('/login', 'AuthController@login');
+

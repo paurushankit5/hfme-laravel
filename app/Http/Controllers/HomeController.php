@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\User;
 
 class HomeController extends Controller
 {
@@ -11,9 +12,11 @@ class HomeController extends Controller
      *
      * @return void
      */
+
+    public static $counter;
     public function __construct()
     {
-        $this->middleware('auth');
+       //$this->middleware('auth');
     }
 
     /**
@@ -22,7 +25,22 @@ class HomeController extends Controller
      * @return \Illuminate\Contracts\Support\Renderable
      */
     public function index()
-    {
+    {   
         return view('home');
+    }
+
+    public function test(Request $request){
+        \DB::beginTransaction();
+
+        $user = User::where('id',1)->lockForUpdate()->first();
+        //sleep(10);
+
+        \DB::commit();
+
+        return $user;
+    }
+
+    public function test1(){
+        return User::where('id',2)->count();
     }
 }
