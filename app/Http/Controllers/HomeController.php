@@ -32,7 +32,7 @@ class HomeController extends Controller
     public function test(Request $request){
         \DB::beginTransaction();
 
-        $user = User::where('id',1)->lockForUpdate()->first();
+        $user = User::where('id',$request->user()->id)->lockForUpdate()->first();
         //sleep(10);
 
         \DB::commit();
